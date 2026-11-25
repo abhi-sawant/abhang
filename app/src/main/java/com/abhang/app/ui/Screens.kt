@@ -649,9 +649,8 @@ fun SearchScreen(repo: AbhangRepository, onBack: () -> Unit, onAbhang: (Int) -> 
                     val echo = remember(results, query) {
                         if (isLatinQuery(query)) {
                             val top = results.first()
-                            val word = repo.highlights(top.abhang.title, query).firstOrNull()?.let { top.abhang.title.substring(it) }
-                                ?: repo.highlights(top.snippet, query).firstOrNull()?.let { top.snippet.substring(it) }
-                            word
+                            firstPhrase(top.abhang.title, repo.highlights(top.abhang.title, query))
+                                ?: firstPhrase(top.snippet, repo.highlights(top.snippet, query))
                         } else null
                     }
                     if (echo != null) Text(stringResource(R.string.search_echo, query.trim(), echo), Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -678,6 +677,19 @@ fun SearchScreen(repo: AbhangRepository, onBack: () -> Unit, onAbhang: (Int) -> 
             }
         }
     }
+}
+
+/**
+ * The first highlighted word together with any highlighted words right after it (only spaces between),
+ * so a joined query like "sundarte" echoes as "सुंदर तें" rather than just "सुंदर".
+ */
+private fun firstPhrase(text: String, ranges: List<IntRange>): String? {
+    val first = ranges.firstOrNull() ?: return null
+    var end = first.last
+    for (r in ranges.drop(1)) {
+        if (text.substring(end + 1, r.first).isBlank()) end = r.last else break
+    }
+    return text.substring(first.first, end + 1)
 }
 
 private fun isLatinQuery(q: String) = q.isNotBlank() && !com.abhang.app.data.PhoneticKey.hasDevanagari(q)

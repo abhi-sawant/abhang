@@ -58,18 +58,67 @@ class AbhangRepository(json: String) {
         abhangs.associate { it.id to PhoneticKey.of("${it.title} ${it.author}") }
     }
 
-    /** One query word: matched against the Devanagari index if typed in Devanagari, else the phonetic one. */
+    /**
+     * One query word: matched against the Devanagari index if typed in Devanagari, else the phonetic one.
+     *
+     * Matching is tiered (see [cost]): an exact substring costs 0; otherwise [FuzzyMatcher] looks for the
+     * word with spaces ignored ("सुंदरते" finds "सुंदर तें") and, for longer words, with a typo or two.
+     */
     private class Token(val dev: String?, val phonetic: String?, val fine: String?) {
-        fun matches(devHay: () -> String, phoneticHay: () -> String) =
-            if (dev != null) devHay().contains(dev) else phoneticHay().contains(phonetic!!)
+        private val key = dev ?: phonetic!!
+        private val fuzzy = FuzzyMatcher.of(key)
 
-        /** Does this single word match the token (substring, same rules as [matches])? */
-        fun matchesWord(word: String) =
-            if (dev != null) DevanagariNormalizer.normalize(word).contains(dev) else PhoneticKey.of(word).contains(phonetic!!)
+        private fun norm(text: String) = if (dev != null) DevanagariNormalizer.normalize(text) else PhoneticKey.of(text)
+
+        /** 0 = exact substring, 1 + typos = found only with spaces ignored and/or typos, null = no match. */
+        fun cost(devHay: () -> String, phoneticHay: () -> String): Int? {
+            val hay = if (dev != null) devHay() else phoneticHay()
+            if (hay.contains(key)) return 0
+            val e = fuzzy?.minErrors(hay) ?: return null
+            return if (e < 0) null else 1 + e
+        }
+
+        /** Does this single word contain the token exactly (after normalization)? */
+        fun matchesWord(word: String) = norm(word).contains(key)
 
         /** Is this word an exact (not just similar-sounding) match for the token? */
         fun exactWord(word: String) =
             if (dev != null) DevanagariNormalizer.normalize(word) == dev else PhoneticKey.fine(word) == fine
+
+        /** Indices of the [words] that the best fuzzy (space-ignoring / typo) occurrence of the token runs across. */
+        fun fuzzyWords(words: List<String>): Set<Int> {
+            val f = fuzzy ?: return emptySet()
+            val compact = StringBuilder()
+            val owner = ArrayList<Int>() // word index of each char in `compact`
+            words.forEachIndexed { i, w -> norm(w).forEach { c -> if (c != ' ') { compact.append(c); owner.add(i) } } }
+            val text = compact.toString()
+            val best = f.minErrors(text)
+            if (best < 0) return emptySet()
+            val out = HashSet<Int>()
+            f.scan(text) { end, e ->
+                if (e == best) {
+                    // Shortest plausible span; overlapping a word by one char is enough to mark it.
+                    val start = (end - key.length + 1 + e).coerceIn(0, end)
+                    for (j in start..end) out.add(owner[j])
+                }
+                false
+            }
+            return out
+        }
+    }
+
+    /** Sum of the tokens' match costs (every token must match), or null if any token is missing. */
+    private fun List<Token>.cost(devHay: () -> String, phoneticHay: () -> String): Int? {
+        var total = 0
+        for (t in this) total += t.cost(devHay, phoneticHay) ?: return null
+        return total
+    }
+
+    /** [cost] against an arbitrary piece of text, normalized on demand. */
+    private fun List<Token>.costIn(text: String): Int? {
+        val dev by lazy { DevanagariNormalizer.normalize(text) }
+        val ph by lazy { PhoneticKey.of(text) }
+        return cost({ dev }, { ph })
     }
 
     private fun tokenize(query: String): List<Token> =
@@ -107,26 +156,38 @@ class AbhangRepository(json: String) {
         numberQuery(query)?.let { n -> return@withContext all.filter { it.num == n } }
         val tokens = tokenize(query)
         if (tokens.isEmpty()) return@withContext all
-        all.filter { a -> tokens.all { it.matches({ titleIndex.getValue(a.id) }, { phoneticTitleIndex.getValue(a.id) }) } }
+        // Exact matches first, then space-insensitive / typo matches; corpus order within a tier (stable sort).
+        all.mapNotNull { a -> tokens.cost({ titleIndex.getValue(a.id) }, { phoneticTitleIndex.getValue(a.id) })?.let { a to it } }
+            .sortedBy { it.second }.map { it.first }
     }
 
     /** Ranked results (best first) plus the total number of matches before the [limit] cut. */
     suspend fun searchWithTotal(query: String, limit: Int = 300): SearchOutcome = withContext(Dispatchers.Default) {
         val tokens = tokenize(query)
         if (tokens.isEmpty()) return@withContext SearchOutcome(emptyList(), 0)
-        val hits = abhangs.filter { a ->
-            tokens.all { it.matches({ searchIndex.getValue(a.id) }, { phoneticSearchIndex.getValue(a.id) }) }
+        val hits = abhangs.mapNotNull { a ->
+            tokens.cost({ searchIndex.getValue(a.id) }, { phoneticSearchIndex.getValue(a.id) })?.let { a to it }
         }
         val scoreBody = hits.size <= 1500 // exact-word scoring of long bodies is skipped for very broad queries
-        // Scores are computed once per hit; the sort is stable, so equal scores keep corpus order.
-        val ranked = hits.map { it to score(it, tokens, scoreBody) }.sortedByDescending { it.second }.map { it.first }
-        val shown = ranked.take(limit).map { a ->
-            val line = a.body.lines().firstOrNull { l -> tokens.all { it.matchesWord(l) || it.matches({ DevanagariNormalizer.normalize(l) }, { PhoneticKey.of(l) }) } }
-                ?: a.body.lines().firstOrNull { l -> tokens.first().matches({ DevanagariNormalizer.normalize(l) }, { PhoneticKey.of(l) }) }
-                ?: a.body.lines().first()
-            SearchResult(a, category(a.categoryId).name, line.trim())
-        }
+        // Ranked like Algolia: fewest typos first (exact, then spaces ignored, then 1 and 2 typos), then the
+        // relevance score. Scores are computed once per hit; the sort is stable, so ties keep corpus order.
+        val ranked = hits.map { (a, cost) -> Triple(a, cost, score(a, tokens, scoreBody)) }
+            .sortedWith(compareBy<Triple<Abhang, Int, Int>> { it.second }.thenByDescending { it.third })
+            .map { it.first }
+        val shown = ranked.take(limit).map { a -> SearchResult(a, category(a.categoryId).name, snippet(a.body, tokens).trim()) }
         SearchOutcome(shown, ranked.size)
+    }
+
+    /** The body line that matches best (fewest typos), else one matching the first word, else the first line. */
+    private fun snippet(body: String, tokens: List<Token>): String {
+        val lines = body.lines()
+        var best: String? = null
+        var bestCost = Int.MAX_VALUE
+        for (l in lines) {
+            val c = tokens.costIn(l) ?: continue
+            if (c < bestCost) { best = l; bestCost = c; if (c == 0) break }
+        }
+        return best ?: lines.firstOrNull { tokens.take(1).costIn(it) != null } ?: lines.first()
     }
 
     suspend fun search(query: String, limit: Int = 300): List<SearchResult> = searchWithTotal(query, limit).results
@@ -138,7 +199,7 @@ class AbhangRepository(json: String) {
     private fun score(a: Abhang, tokens: List<Token>, scoreBody: Boolean): Int {
         var s = 0
         val titleWords = a.title.split(Regex("\\s+"))
-        if (tokens.all { it.matches({ titleIndex.getValue(a.id) }, { phoneticTitleIndex.getValue(a.id) }) }) s += 100
+        if (tokens.cost({ titleIndex.getValue(a.id) }, { phoneticTitleIndex.getValue(a.id) }) != null) s += 100
         if (tokens.all { t -> titleWords.any { t.exactWord(it) } }) s += 200
         else if (scoreBody) {
             val bodyWords = a.body.split(Regex("\\s+"))
@@ -151,6 +212,14 @@ class AbhangRepository(json: String) {
     fun highlights(text: String, query: String): List<IntRange> {
         val tokens = tokenize(query)
         if (tokens.isEmpty()) return emptyList()
-        return Regex("[^\\s।॥]+").findAll(text).filter { m -> tokens.any { it.matchesWord(m.value) } }.map { it.range }.toList()
+        val words = Regex("[^\\s।॥]+").findAll(text).toList()
+        val hit = BooleanArray(words.size)
+        for (t in tokens) {
+            var exact = false
+            words.forEachIndexed { i, w -> if (t.matchesWord(w.value)) { hit[i] = true; exact = true } }
+            // No single word contains it as typed: mark the words a space-ignoring / typo match runs across.
+            if (!exact) t.fuzzyWords(words.map { it.value }).forEach { hit[it] = true }
+        }
+        return words.indices.filter { hit[it] }.map { words[it].range }
     }
 }

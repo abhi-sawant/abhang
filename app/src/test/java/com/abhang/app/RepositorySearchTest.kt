@@ -75,6 +75,37 @@ class RepositorySearchTest {
         assertEquals(listOf(0..5), r)
     }
 
+    @Test fun joinedWordsFindSpacedText() {
+        val r = hits("सुंदरते")
+        assertTrue(r.take(10).any { it.abhang.title.contains("सुंदर") && it.abhang.title.contains("ध्यान") })
+        assertTrue(hits("sundarte").take(10).any { it.abhang.title.contains("सुंदर") && it.abhang.title.contains("ध्यान") })
+    }
+
+    @Test fun typoStillFinds() {
+        // virama left out: "विठठल" should still reach विठ्ठल abhangs
+        assertTrue(hits("विठठल").count { it.abhang.title.contains("विठ्ठल") } >= 20)
+    }
+
+    @Test fun exactMatchesRankAboveFuzzy() {
+        // Every exact "म्हणे" hit must come before any typo-only hit.
+        val r = hits("म्हणे")
+        val firstFuzzy = r.indexOfFirst { !com.abhang.app.data.DevanagariNormalizer.normalize(it.abhang.title + " " + it.abhang.body).contains("म्हणे") }
+        if (firstFuzzy >= 0) assertTrue(r.drop(firstFuzzy).none { com.abhang.app.data.DevanagariNormalizer.normalize(it.abhang.title + " " + it.abhang.body).contains("म्हणे") })
+    }
+
+    @Test fun highlightsSpanJoinedWords() {
+        assertEquals(listOf(0..4, 6..8), repo.highlights("सुंदर तें ध्यान", "सुंदरते"))
+    }
+
+    @Test fun fuzzySearchIsFast() {
+        hits("सुंदरते") // warm up
+        val t0 = System.nanoTime()
+        hits("पंडरपुरचा विठठल")
+        val ms = (System.nanoTime() - t0) / 1_000_000
+        println("fuzzy search took $ms ms")
+        assertTrue("took $ms ms", ms < 2000)
+    }
+
     @Test fun noMatchReturnsEmpty() = assertTrue(hits("xyz").isEmpty())
 
     @Test fun categoryNumberLookup() {

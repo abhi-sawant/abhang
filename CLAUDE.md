@@ -15,8 +15,8 @@ Android (Gradle wrapper, AGP 9.4.1, Kotlin 2.2.10, compileSdk 37, minSdk 24):
 ```powershell
 .\gradlew.bat assembleDebug
 .\gradlew.bat test
-.\gradlew.bat test --tests "com.abhang.app.RepositorySearchTest"
-.\gradlew.bat test --tests "com.abhang.app.DevanagariNormalizerTest.<testName>"
+.\gradlew.bat :app:testDebugUnitTest --tests "com.abhang.app.RepositorySearchTest"
+.\gradlew.bat :app:testDebugUnitTest --tests "com.abhang.app.DevanagariNormalizerTest.<testName>"
 ```
 
 `java` is not on PATH on the dev machine. Set `$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"` (JDK 25) before running Gradle.
@@ -51,7 +51,7 @@ Search lives in `AbhangRepository` and works on two parallel indexes. They are `
 - **Devanagari path.** `DevanagariNormalizer` normalizes the text, and it's used when the query word contains Devanagari.
 - **Phonetic path.** `PhoneticKey` romanizes Devanagari into a lossy key and applies the same reduction to Latin queries. The reduction drops the schwa and merges long/short vowels, aspirated/plain consonants, retroflex/dental, s/sh, v/w and doubled letters. Typing `vitthal` therefore matches `विठ्ठल`.
 
-Each query word becomes a `Token` that picks one path or the other, so mixed-script queries work. All tokens must match (AND). Full search (`searchWithTotal`) matches title, author, category name and body, ranks title and exact-word hits first, and caps results at 300 while reporting the total. The category filter (`filterCategory`) matches only title and author, and a query made only of digits (ASCII or Devanagari) filters by abhang number (`num`). When you change either normalizer, the indexes and the Latin-query behavior change together, so run `RepositorySearchTest` and `DevanagariNormalizerTest`.
+Each query word becomes a `Token` that picks one path or the other, so mixed-script queries work. All tokens must match (AND). Matching is tiered: an exact substring of the normalized text costs 0; otherwise `FuzzyMatcher` (Bitap / Wu–Manber) searches with spaces in the text ignored (`सुंदरते` finds `सुंदर तें`) and with up to 1 typo for words of 5+ chars and 2 typos for 9+ chars. Words shorter than 5 chars stay exact-only, because joined across spaces they match noise. Results sort by total cost first (fewest typos), then by score, as Algolia ranks. `highlights` marks the words that a fuzzy match runs across. Run `FuzzyMatcherTest` too when you change matching. Full search (`searchWithTotal`) matches title, author, category name and body, ranks title and exact-word hits first, and caps results at 300 while reporting the total. The category filter (`filterCategory`) matches only title and author, and a query made only of digits (ASCII or Devanagari) filters by abhang number (`num`). When you change either normalizer, the indexes and the Latin-query behavior change together, so run `RepositorySearchTest` and `DevanagariNormalizerTest`.
 
 ### Content pipeline (`tools/` and `content/`)
 1. `wslib.mjs` is the rate-limited MediaWiki API client for mr.wikisource.org. It caches raw page text in `content/raw/`, with file names that are URL-encoded titles.
