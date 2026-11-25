@@ -296,6 +296,8 @@ fun HomeScreen(
     ) { mod ->
         LazyColumn(mod.fillMaxSize(), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item { Text(stringResource(R.string.home_subtitle), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.secondary) }
+            // Shows only when a downloaded update is waiting for the user's tap.
+            item(key = "update") { UpdateBanner() }
             if (last != null) item(key = "continue") {
                 Card(
                     onClick = { onAbhang(last.id) },
@@ -750,6 +752,7 @@ fun AboutScreen(onBack: () -> Unit) {
                     SourceRow(stringResource(R.string.about_src_ganpati_aarti), stringResource(R.string.about_src_ganpati_aarti_site))
                 }
                 AboutSection(stringResource(R.string.about_font_title), stringResource(R.string.about_font_text))
+                UpdateSection()
                 if (version.isNotBlank()) Text(stringResource(R.string.about_version, version.toDevanagariDigits()),
                     style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
@@ -757,4 +760,4 @@ fun AboutScreen(onBack: () -> Unit) {
     }
 }
 
-private fun String.toDevanagariDigits() = map { if (it in '0'..'9') '०' + (it - '0') else it }.joinToString("")
+internal fun String.toDevanagariDigits() = map { if (it in '0'..'9') '०' + (it - '0') else it }.joinToString("")

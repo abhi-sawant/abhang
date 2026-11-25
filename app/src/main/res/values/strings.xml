@@ -42,7 +42,7 @@
     <string name="prov_check_hint">गाण्यापूर्वी आपल्या परंपरेतील पाठाशी पडताळून पाहावा.</string>
 
     <string name="about_offline_title">ऑफलाइन</string>
-    <string name="about_offline_text">हे ॲप पूर्णपणे ऑफलाइन चालते. यातील अभंग संतांच्या पारंपरिक (सार्वजनिक) रचना आहेत.</string>
+    <string name="about_offline_text">हे ॲप पूर्णपणे ऑफलाइन चालते. इंटरनेटचा वापर फक्त नवीन आवृत्ती तपासण्यासाठी व उतरवण्यासाठी होतो. यातील अभंग संतांच्या पारंपरिक (सार्वजनिक) रचना आहेत.</string>
     <string name="about_important_title">महत्त्वाचे</string>
     <string name="about_important_text">मजकूर इंटरनेटवरील स्रोतांवरून गोळा केला आहे. काही अभंगांवर \"स्वयंचलित दुरुस्ती; तपासणी आवश्यक\" अशी नोंद आहे — त्यात लहानसहान शुद्धलेखनाच्या चुका असू शकतात. हरिपाठ, पसायदान व आरत्यांचा पाठ वेगवेगळ्या आवृत्त्यांत थोडा वेगळा आढळतो; गाण्यापूर्वी तो आपल्या परंपरेतील पाठाशी पडताळून पाहावा.</string>
     <string name="about_sources_title">स्रोत</string>
@@ -56,5 +56,23 @@
     <string name="about_src_ganpati_aarti_site">amit.chakradeo.net</string>
     <string name="about_font_title">फॉन्ट</string>
     <string name="about_font_text">Google Sans (SIL Open Font License)</string>
+
+    <string name="update_title">नवीन आवृत्ती</string>
+    <string name="update_auto_text">इंटरनेट सुरू असताना ॲप नवीन आवृत्ती आपोआप तपासते आणि उतरवून घेते.</string>
+    <string name="update_check">नवीन आवृत्ती तपासा</string>
+    <string name="update_checking">तपासत आहे…</string>
+    <string name="update_downloading">नवीन आवृत्ती उतरवत आहे… %1$s%%</string>
+    <string name="update_up_to_date">आपल्याकडे नवीनतम आवृत्ती आहे.</string>
+    <string name="update_check_failed">तपासता आले नाही. इंटरनेट सुरू आहे का ते पाहा.</string>
+    <string name="update_ready_title">नवीन आवृत्ती तयार आहे</string>
+    <string name="update_ready_body">आवृत्ती %1$s उतरवून ठेवली आहे. खालील बटण दाबा. ॲप बंद होऊन नवीन आवृत्ती बसेल; नंतर ॲप पुन्हा उघडा.</string>
+    <string name="update_failed">आवृत्ती %1$s बसवता आली नाही. पुन्हा प्रयत्न करा.</string>
+    <string name="update_now">आत्ता अद्ययावत करा</string>
+    <string name="update_installing">अद्ययावत होत आहे…</string>
+    <string name="update_retry">पुन्हा प्रयत्न करा</string>
+    <string name="update_permission_title">एकदाच परवानगी द्या</string>
+    <string name="update_permission_body">नवीन आवृत्ती बसवण्यासाठी फोनची एकदा परवानगी लागते. पुढील पानावर ‘परवानगी द्या’ (Allow from this source) हे बटण सुरू करा आणि मागे या. ही परवानगी फक्त एकदाच द्यायची आहे.</string>
+    <string name="update_permission_open">पुढे चला</string>
+    <string name="update_later">नंतर</string>
     <string name="about_version">आवृत्ती %1$s</string>
 </resources>

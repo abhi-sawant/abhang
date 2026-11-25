@@ -40,6 +40,8 @@ import com.abhang.app.ui.CategoryScreen
 import com.abhang.app.ui.DetailScreen
 import com.abhang.app.ui.HomeScreen
 import com.abhang.app.ui.SearchScreen
+import com.abhang.app.update.UpdateWorker
+import com.abhang.app.update.Updater
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +52,9 @@ class MainActivity : ComponentActivity() {
         )
         super.onCreate(savedInstanceState)
         val store = ReadingStore(applicationContext)
+        // Self-update: show an already-downloaded update, and check for a new one in the background.
+        Updater.restore(applicationContext)
+        UpdateWorker.schedule(applicationContext)
         setContent {
             AbhangTheme {
                 var loaded by remember { mutableStateOf<AbhangRepository?>(null) }
@@ -103,5 +108,20 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    // Background installs close the app, so they only happen while it is not on screen.
+    override fun onStart() {
+        super.onStart()
+        Updater.appInForeground = true
+        Updater.restore(applicationContext)
+    }
+
+    override fun onStop() {
+        Updater.appInForeground = false
+        if (!isChangingConfigurations && Updater.status.value is Updater.Status.Ready && Updater.canInstallSilently(this)) {
+            UpdateWorker.installSoon(applicationContext)
+        }
+        super.onStop()
     }
 }

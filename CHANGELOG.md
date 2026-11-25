@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.0 — 2026-11-25
+
+### Added
+
+- The app now updates itself. When the phone is online it checks for a new version twice a day and downloads it. On Android 12 and newer the update usually installs by itself while the app is closed. Otherwise a large "आत्ता अद्ययावत करा" (update now) button on the home screen installs it with one tap. The first time, the app asks once to allow "Install unknown apps". You can also check from माहिती व स्रोत (About).
+- Search forgives small mistakes. It ignores spaces, so `सुंदरते` or `sundarte` finds `सुंदर तें`, and it allows one typo in words of 5 or more letters (two in words of 9 or more). Results with the fewest mistakes come first, and the matched words are highlighted.
+
+### Changed
+
+- The app now uses the internet, but only to check for and download new versions from this project's GitHub Releases. All abhangs stay on the phone and work offline. Nothing is collected or sent anywhere.
+
+### Upgrading from 1.1.1
+
+- Version 1.1.1 has no updater. Install 1.2.0 over it by hand once; after that, updates arrive on their own.
+
 ## 1.1.1 — 2026-11-25
 
 First release of Abhang (अभंग संग्रह), an offline Android app for reading Marathi abhangs.

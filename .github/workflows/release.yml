@@ -181,6 +181,16 @@ jobs:
           apk="abhang-$VERSION.apk"
           sha256sum "$apk" > SHA256SUMS.txt
           cat SHA256SUMS.txt
+          # Update feed for the in-app updater (app/.../update/UpdateManifest.kt). The app reads it via
+          # releases/latest/download/latest.json, so it must be on every release.
+          IFS=. read -r major minor patch <<< "$VERSION"
+          version_code=$(( 10#$major * 10000 + 10#$minor * 100 + 10#$patch ))
+          sha="$(cut -d' ' -f1 SHA256SUMS.txt)"
+          size="$(stat -c %s "$apk")"
+          url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$VERSION/$apk"
+          printf '{"versionCode":%d,"versionName":"%s","apkUrl":"%s","sha256":"%s","size":%d}\n' \
+            "$version_code" "$VERSION" "$url" "$sha" "$size" > latest.json
+          cat latest.json
           {
             cat changelog-section.md
             echo
@@ -190,6 +200,7 @@ jobs:
             echo "| --- | --- |"
             echo "| \`$apk\` | Android app. Install it over an earlier version to update. |"
             echo "| \`SHA256SUMS.txt\` | Checksum for the APK. |"
+            echo "| \`latest.json\` | Update feed read by the app's built-in updater. |"
             echo
             echo "**APK signing certificate (SHA-256):**"
             echo "\`$EXPECTED_CERT_SHA256\`"
@@ -207,4 +218,4 @@ jobs:
             --target "$GITHUB_SHA" \
             --title "Abhang $VERSION" \
             --notes-file notes.md \
-            "abhang-$VERSION.apk" SHA256SUMS.txt
+            "abhang-$VERSION.apk" SHA256SUMS.txt latest.json

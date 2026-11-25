@@ -20,7 +20,9 @@ The app needs Android 7.0 or newer.
 2. Open the downloaded file. If Android asks, allow your browser or file manager to install unknown apps.
 3. Tap **Install**.
 
-To update, install the newer APK over the old one. Your favourites and settings stay.
+From version 1.2.0 on, the app updates itself. When it is online it checks for a new version twice a day and downloads it. The first time, it asks you to allow "Install unknown apps" for Abhang. After that, on Android 12 and newer the update usually installs by itself while the app is closed. On older phones, and on some phone brands, a large "आत्ता अद्ययावत करा" (update now) button appears on the home screen and one tap installs it. You can also check from **माहिती व स्रोत** (About). Your favourites and settings stay.
+
+If you have 1.1.1 or older, install the newer APK over the old one once by hand. After that, updates are automatic.
 
 ## What's inside
 
@@ -35,7 +37,7 @@ To update, install the newer APK over the old one. Your favourites and settings 
 
 ## Features
 
-- **Fully offline.** The app has no internet permission. Nothing is collected or sent anywhere.
+- **Works offline.** All abhangs are on the phone. The internet is used only to check for and download new versions of the app from this repository's Releases. Nothing is collected or sent anywhere.
 - **Search the way you type.** Write in Devanagari or in English letters: `vitthal`, `vithal` and `विठ्ठल` all find विठ्ठल. You can also search by abhang number.
 - **Voice search.** Speak in Marathi using your phone's speech recognizer. It needs internet unless an offline Marathi voice pack is installed.
 - **Comfortable reading.** Make the text larger or smaller with अ− / अ+. The screen stays on while you read, and the app follows your phone's light or dark theme.

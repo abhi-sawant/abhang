@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Intentionally no INTERNET permission: the app is fully offline. -->
+    <!-- Internet is used only by the self-updater (update/Updater.kt): it reads latest.json from
+         GitHub Releases and downloads a newer APK. All content stays bundled and offline. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Lets the app install its own updates. The user allows "Install unknown apps" once. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- Android 12+: with the above granted, self-updates install without a prompt. -->
+    <uses-permission android:name="android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION" />
     <!-- Only to tell whether the phone is online before voice search (the recognizer needs internet
          without an offline Marathi pack). It grants no network access. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -24,5 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".update.InstallResultReceiver"
+            android:exported="false" />
     </application>
 </manifest>
