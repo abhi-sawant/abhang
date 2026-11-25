@@ -7,3 +7,9 @@ build/
 
 # Wikisource fetch cache (regenerate with: node tools/fetch_all.mjs)
 content/raw/
+
+# Release signing (never commit keys or their passwords)
+keystore.properties
+*.jks
+*.keystore
+abhang-signing-backup*.zip

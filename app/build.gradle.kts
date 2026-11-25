@@ -1,7 +1,29 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.compose")
 }
+
+// Single source of truth for the app version: the VERSION file in the repo root (MAJOR.MINOR.PATCH).
+val appVersionName: String = rootProject.file("VERSION").readText().trim()
+val appVersionCode: Int = run {
+    val parts = appVersionName.split(".").map { it.toInt() }
+    require(parts.size == 3 && parts.all { it in 0..99 }) {
+        "VERSION must be MAJOR.MINOR.PATCH with each part 0..99, got '$appVersionName'"
+    }
+    parts[0] * 10000 + parts[1] * 100 + parts[2]
+}
+
+// Release signing comes from keystore.properties (local) or environment variables (CI).
+// Without either, the release build is produced unsigned.
+val keystoreProps = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+fun signingValue(prop: String, env: String): String? =
+    keystoreProps.getProperty(prop) ?: System.getenv(env)
+val releaseStoreFile = signingValue("storeFile", "ABHANG_KEYSTORE_FILE")
 
 android {
     namespace = "com.abhang.app"
@@ -11,8 +33,19 @@ android {
         applicationId = "com.abhang.app"
         minSdk = 24
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = appVersionCode
+        versionName = appVersionName
+    }
+
+    signingConfigs {
+        if (releaseStoreFile != null) {
+            create("release") {
+                storeFile = rootProject.file(releaseStoreFile)
+                storePassword = signingValue("storePassword", "ABHANG_KEYSTORE_PASSWORD")
+                keyAlias = signingValue("keyAlias", "ABHANG_KEY_ALIAS")
+                keyPassword = signingValue("keyPassword", "ABHANG_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
@@ -20,6 +53,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
     buildFeatures { compose = true }
