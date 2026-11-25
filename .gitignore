@@ -1,0 +1,9 @@
+*.iml
+.gradle/
+local.properties
+.idea/
+build/
+.kotlin/
+
+# Wikisource fetch cache (regenerate with: node tools/fetch_all.mjs)
+content/raw/

@@ -1,0 +1,1 @@
+export const DevanagariNormalizer = { normalize(s){ return s.normalize("NFC").replace(/[‌‍़।॥]/g,"").replace(/ँ/g,"ं").replace(/ी/g,"ि").replace(/ू/g,"ु").replace(/[०-९0-9.]/g,"").replace(/\s+/g," ").trim(); } };

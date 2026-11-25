@@ -1,0 +1,84 @@
+@font-face {
+  font-family: 'Hind';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/hind_v18_5aU69_a8oxmIRG4.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Hind';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/hind_v18_5aU19_a8oxmIfJpbIRs.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Hind';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/hind_v18_5aU19_a8oxmIfLZcIRs.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Laila';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/laila_v20_LYjBdG_8nE8jDLypowNA.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Laila';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/laila_v20_LYjBdG_8nE8jDLyFpANA.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Laila';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/laila_v20_LYjBdG_8nE8jDLzhpQNA.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mukta';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/mukta_v17_iJWKBXyXfDDVXYnG.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mukta';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/mukta_v17_iJWHBXyXfDDVXbEyjlma.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mukta';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/mukta_v17_iJWHBXyXfDDVXbEeiVma.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mukta';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/mukta_v17_iJWHBXyXfDDVXbF6iFma.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Tiro Devanagari Marathi';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/tirodevanagarimarathi_v7_fC1xPZBSZHrRhS3rd4M0MAPNJUHl4znXCxAkotDr.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Yatra One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/yatraone_v16_C8ch4copsHzj8p7NaF0xww.ttf) format('truetype');
+}

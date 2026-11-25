@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abhang redesign candidates</title>
+
+
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{
+  --bg:#16171a; --panel:#1f2024; --line:#34363c; --tx:#ecebe6; --tx2:#a3a49f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font:16px/1.55 "Hind","Mukta",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+::selection{background:#e8b04a;color:#16171a}
+a{color:inherit}
+.top{max-width:1280px;margin:0 auto;padding:40px 24px 8px}
+.top h1{font:600 28px/1.2 system-ui,sans-serif;letter-spacing:-.01em}
+.top p{color:var(--tx2);max-width:68ch;margin-top:10px}
+.jump{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.jump a{padding:8px 14px;border:1px solid var(--line);border-radius:999px;text-decoration:none;font:500 14px system-ui,sans-serif;color:var(--tx)}
+.jump a:hover,.jump a:focus-visible{background:var(--panel);outline:2px solid #e8b04a;outline-offset:2px}
+section.cand{max-width:1280px;margin:0 auto;padding:56px 24px 24px;border-top:1px solid var(--line);margin-top:40px}
+.spec{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;margin-bottom:32px}
+@media(min-width:900px){.spec{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+.spec h2{font:600 30px/1.2 system-ui,sans-serif;letter-spacing:-.01em}
+.spec h2 span{font-family:"Hind";font-weight:500;color:var(--tx2);margin-left:10px;font-size:24px}
+.spec .thesis{margin-top:12px;font-size:17px;max-width:62ch}
+.spec dl{display:grid;grid-template-columns:96px 1fr;gap:10px 16px;font-size:14.5px;color:var(--tx2)}
+.spec dt{color:var(--tx);font-weight:600;font-family:system-ui,sans-serif;font-size:13px;padding-top:2px}
+.spec dd b{color:var(--tx);font-weight:600}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:7px;font:500 12px/1 ui-monospace,Consolas,monospace;color:var(--tx);padding:5px 9px 5px 5px;border:1px solid var(--line);border-radius:999px}
+.chip i{width:18px;height:18px;border-radius:50%;display:block;border:1px solid rgba(255,255,255,.25)}
+.screens{display:flex;gap:28px;overflow-x:auto;padding:8px 4px 28px;scroll-snap-type:x proximity}
+.shot{flex:0 0 auto;scroll-snap-align:start}
+.shot figcaption{font:500 13px system-ui,sans-serif;color:var(--tx2);margin-top:12px;text-align:center}
+
+/* ---------- phone shell ---------- */
+.phone{width:360px;height:760px;border-radius:30px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 8px #0b0b0d,0 0 0 9px #3a3b40,0 24px 48px rgba(0,0,0,.5)}
+.sb{height:28px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font:500 13px system-ui,sans-serif}
+.sb svg{height:12px;width:auto;display:block}
+.sb .ic{display:flex;gap:6px;align-items:center}
+.gest{height:22px;flex:none;display:flex;align-items:center;justify-content:center}
+.gest i{display:block;width:108px;height:4px;border-radius:2px;background:currentColor;opacity:.55}
+.body{flex:1;min-height:0;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.scroll{flex:1;min-height:0;overflow:hidden}
+svg.i{width:24px;height:24px;fill:currentColor;display:block;flex:none}
+.ibtn{width:48px;height:48px;display:grid;place-items:center;flex:none}
+
+/* =====================================================
+   A — पोथी : turmeric paper, ink, kumkum rubrication
+   ===================================================== */
+.a{--paper:#F3DB82;--leaf:#F8E8A9;--ink:#21160A;--ink2:#5B4514;--red:#9E1B13;
+  background:var(--paper);color:var(--ink);font-family:"Mukta",sans-serif}
+.a .sb{color:var(--ink)}
+.a .bar{height:56px;flex:none;display:flex;align-items:center;padding:0 4px;border-bottom:4px double var(--red)}
+.a .bar h3{flex:1;text-align:center;font:400 21px/1.2 "Tiro Devanagari Marathi",serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a .bar .sz{font:600 19px/1 "Tiro Devanagari Marathi",serif;color:var(--red);min-width:48px;height:48px;display:grid;place-items:center}
+.a .bar .ibtn{color:var(--ink)}
+.a .title-block{margin:18px 16px 6px;border:1.5px solid var(--red);padding:5px}
+.a .title-block div{border:1px solid var(--red);padding:14px 10px 13px;text-align:center}
+.a .title-block h2{font:400 33px/1.25 "Tiro Devanagari Marathi",serif}
+.a .title-block h2 em{font-style:normal;color:var(--red);padding:0 .25em}
+.a .title-block p{font:400 15px/1.4 "Tiro Devanagari Marathi",serif;color:var(--ink2);margin-top:2px}
+.a .toc-h{font:400 20px/1.2 "Tiro Devanagari Marathi",serif;color:var(--red);padding:18px 20px 4px}
+.a .toc{padding:0 20px}
+.a .toc .r{padding:11px 0 10px;border-bottom:1px solid rgba(33,22,10,.22)}
+.a .toc .l{display:flex;align-items:baseline;gap:6px}
+.a .toc .nm{font:400 20px/1.3 "Tiro Devanagari Marathi",serif}
+.a .toc .dots{flex:1;border-bottom:2px dotted rgba(33,22,10,.5);transform:translateY(-4px);min-width:12px}
+.a .toc .ct{font:700 16px/1 "Mukta";color:var(--red)}
+.a .toc .ds{font:400 14px/1.4 "Tiro Devanagari Marathi",serif;color:var(--ink2);margin-top:1px}
+.a .foot{flex:none;border-top:4px double var(--red);display:flex;align-items:center;justify-content:center;gap:8px;height:52px;font:600 16px "Mukta";color:var(--ink)}
+.a .foot svg{color:var(--red);width:22px;height:22px}
+.a .filter{margin:14px 16px 4px;background:var(--leaf);border-bottom:2px solid var(--ink);height:52px;display:flex;align-items:center;padding:0 12px;gap:10px;color:var(--ink2);font:400 17px "Tiro Devanagari Marathi",serif}
+.a .filter svg{color:var(--red)}
+.a .ix{padding:4px 16px}
+.a .ix .r{display:flex;gap:14px;padding:13px 0 12px;border-bottom:1px solid rgba(33,22,10,.22)}
+.a .ix .no{flex:none;width:42px;text-align:right;font:700 17px/1.55 "Mukta";color:var(--red)}
+.a .ix .tt{font:400 21px/1.35 "Tiro Devanagari Marathi",serif}
+.a .ix .au{font:500 14px/1.4 "Mukta";color:var(--ink2);margin-top:1px}
+.a .ix-head{display:flex;justify-content:space-between;padding:12px 20px 0;font:500 14px "Mukta";color:var(--ink2)}
+.a .page{margin:14px 14px 0;border:1.5px solid var(--red);padding:5px;background:var(--leaf)}
+.a .page>div{border:1px solid var(--red);padding:18px 16px 12px}
+.a .page h2{font:400 27px/1.3 "Tiro Devanagari Marathi",serif;text-align:center}
+.a .page .by{text-align:center;font:600 15px "Mukta";color:var(--ink2);margin-top:4px}
+.a .flag{display:flex;gap:10px;align-items:flex-start;margin:14px 14px 0;color:var(--ink);font:500 14px/1.4 "Mukta"}
+.a .flag svg{color:var(--red);width:22px;height:22px;margin-top:1px}
+.a .flag b{font-weight:700;display:block}
+.a .cp{margin-top:18px;font:400 24px/1.6 "Tiro Devanagari Marathi",serif}
+.a .cp .h{display:block}
+.a .cp .n{color:var(--red);font-size:20px}
+.a .cp.sig{color:var(--red)}
+.a .cp.sig .h{color:var(--red)}
+.a .rule{height:0;border-top:1px solid var(--red);margin:16px 40px 0;position:relative}
+.a .ctl{flex:none;border-top:4px double var(--red);display:flex;align-items:center;padding:4px 8px;gap:2px}
+.a .ctl .sz{font:600 20px "Tiro Devanagari Marathi",serif;color:var(--red);width:48px;height:48px;display:grid;place-items:center}
+.a .ctl .sp{flex:1}
+.a .ctl .go{height:48px;padding:0 14px;display:flex;align-items:center;gap:2px;font:600 16px "Mukta";color:var(--ink)}
+.a .ctl .go svg{color:var(--red)}
+.a .ctl .go.off{opacity:.35}
+.a .ctl .scr{display:flex;align-items:center;gap:6px;height:48px;padding:0 8px;font:500 14px "Mukta";color:var(--ink2)}
+.a .ctl .scr svg{color:var(--red);width:22px;height:22px}
+.a .q{margin:14px 16px 4px;background:var(--leaf);border-bottom:2px solid var(--red);height:56px;display:flex;align-items:center;padding:0 12px;gap:10px;font:500 20px "Mukta"}
+.a .q svg{color:var(--red)}
+.a .q .caret{width:2px;height:26px;background:var(--red);margin-left:-8px}
+.a .q .x{margin-left:auto;color:var(--ink2)}
+.a .hint{margin:10px 20px 0;font:500 14.5px/1.4 "Mukta";color:var(--ink2)}
+.a .hint b{font:400 17px "Tiro Devanagari Marathi",serif;color:var(--ink);padding:0 2px;border-bottom:2px solid var(--red)}
+.a .res{padding:6px 16px}
+.a .res .r{padding:13px 0 12px;border-bottom:1px solid rgba(33,22,10,.22)}
+.a .res .tt{font:400 21px/1.35 "Tiro Devanagari Marathi",serif}
+.a .res .sn{font:400 16px/1.45 "Tiro Devanagari Marathi",serif;color:var(--ink2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a .res .mt{font:600 13.5px "Mukta";color:var(--red);margin-top:2px}
+.a mark{background:none;color:inherit;border-bottom:2px solid var(--red);font-weight:inherit}
+
+/* =====================================================
+   B — वारी : the road to Pandharpur, in daylight
+   ===================================================== */
+.b{--bg:#F7F8F4;--ink:#111A36;--ink2:#46506C;--saf:#EE6F12;--safT:#B34A00;--tul:#1B6B43;--tulT:#DDEEE3;--safT2:#FFE7CF;--line:#D8DDD0;
+  background:var(--bg);color:var(--ink);font-family:"Mukta",sans-serif}
+.b .sb{color:var(--ink)}
+.b .head{padding:6px 20px 0;display:flex;align-items:flex-start;justify-content:space-between}
+.b .head h2{font:400 34px/1.25 "Yatra One","Mukta",sans-serif;color:var(--ink);padding-top:4px}
+.b .head p{font:500 15px/1.4 "Mukta";color:var(--ink2);margin-top:0}
+.b .head svg.flag{width:54px;height:54px;flex:none;margin-top:4px}
+.b .sbar{margin:16px 16px 6px;height:56px;border-radius:28px;background:#E9EDE4;display:flex;align-items:center;padding:0 18px;gap:14px;color:var(--ink2);font:500 17px "Mukta"}
+.b .sbar svg{color:var(--ink)}
+.b .route{position:relative;padding:14px 20px 0 20px}
+.b .route:before{content:"";position:absolute;left:34px;top:0;bottom:0;width:4px;background:var(--saf);border-radius:2px}
+.b .stop{position:relative;display:flex;gap:16px;padding:0 0 18px;min-height:78px}
+.b .node{flex:none;width:30px;height:30px;border-radius:50%;background:var(--bg);border:3px solid var(--tul);display:grid;place-items:center;font:700 13.5px/1 "Mukta";color:var(--tul);position:relative;z-index:1;margin-top:3px}
+.b .stop .nm{font:400 20px/1.35 "Yatra One","Mukta",sans-serif}
+.b .stop .ds{font:400 14.5px/1.4 "Mukta";color:var(--ink2)}
+.b .stop .ct{font:700 13.5px/1 "Mukta";color:var(--tul);margin-top:5px}
+.b .nav{flex:none;height:76px;background:#EDF0E8;display:flex;border-top:1px solid var(--line)}
+.b .nav div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:600 13px "Mukta";color:var(--ink2)}
+.b .nav div span{width:62px;height:32px;border-radius:16px;display:grid;place-items:center}
+.b .nav .on{color:var(--ink)}
+.b .nav .on span{background:var(--safT2);color:var(--safT)}
+.b .bar{height:60px;flex:none;display:flex;align-items:center;padding:0 4px}
+.b .bar h3{flex:1;font:400 23px/1.2 "Yatra One","Mukta",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:4px}
+.b .bar .ibtn{color:var(--ink)}
+.b .sub{padding:0 20px;font:600 14px "Mukta";color:var(--tul)}
+.b .filter{margin:12px 16px 4px;height:52px;border-radius:14px;border:2px solid var(--ink);display:flex;align-items:center;padding:0 14px;gap:10px;color:var(--ink2);font:500 16px "Mukta"}
+.b .ix{padding:4px 16px}
+.b .ix .r{display:flex;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.b .stone{flex:none;min-width:48px;height:56px;padding:0 6px;border:2.5px solid var(--ink);border-radius:24px 24px 6px 6px;display:grid;place-items:end center;font:700 16px/1 "Mukta";color:var(--ink);padding-bottom:7px;background:linear-gradient(var(--safT2) 0 0) top/100% 24px no-repeat}
+.b .ix .tt{font:600 19px/1.35 "Mukta"}
+.b .ix .au{font:500 14px/1.3 "Mukta";color:var(--ink2)}
+.b .content{padding:4px 20px 0}
+.b .content h2{font:400 28px/1.3 "Yatra One","Mukta",sans-serif;margin-top:6px}
+.b .content .by{font:700 16px "Mukta";color:var(--tul);margin-top:2px}
+.b .flag2{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:10px 12px;background:var(--safT2);border-radius:12px;color:var(--ink);font:500 14px/1.4 "Mukta"}
+.b .flag2 svg{color:var(--safT);width:22px;height:22px;margin-top:1px}
+.b .flag2 b{display:block;font-weight:700}
+.b .cp{margin-top:18px;font:500 24px/1.62 "Mukta"}
+.b .cp .h{display:block}
+.b .cp .n{color:var(--tul);font-weight:700;font-size:20px}
+.b .cp.sig .t{background:linear-gradient(transparent 62%,#FFC58A 62% 92%,transparent 92%);font-weight:700}
+.b .ctl{flex:none;height:72px;background:#EDF0E8;border-top:1px solid var(--line);display:flex;align-items:center;padding:0 8px;gap:2px}
+.b .ctl .sz{font:700 20px "Mukta";color:var(--ink);width:48px;height:48px;display:grid;place-items:center}
+.b .ctl .sun{width:48px;height:48px;display:grid;place-items:center;color:var(--safT)}
+.b .ctl .sp{flex:1}
+.b .ctl .go{width:52px;height:52px;border-radius:16px;background:var(--ink);color:#fff;display:grid;place-items:center;margin-left:8px}
+.b .ctl .go.off{background:#CED3C7;color:#fff}
+.b .ctl .go.main{background:var(--saf);color:var(--ink)}
+.b .sq{margin:6px 16px 4px;height:56px;border-radius:28px;background:#E9EDE4;display:flex;align-items:center;padding:0 6px 0 18px;gap:14px;font:500 19px "Mukta";color:var(--ink)}
+.b .sq .caret{width:2px;height:26px;background:var(--ink);margin-left:-10px}
+.b .sq .x{margin-left:auto}
+.b .hint{margin:8px 20px 0;font:500 14.5px/1.4 "Mukta";color:var(--ink2);display:flex;align-items:center;gap:8px}
+.b .hint b{font:700 15px "Mukta";background:var(--tulT);color:var(--tul);padding:3px 10px;border-radius:8px}
+.b .res{padding:4px 16px}
+.b .res .r{padding:13px 0 12px;border-bottom:1px solid var(--line)}
+.b .res .tt{font:600 19px/1.35 "Mukta"}
+.b .res .sn{font:400 15.5px/1.45 "Mukta";color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b .res .mt{font:700 13px "Mukta";color:var(--tul);margin-top:2px}
+.b mark{background:#FFC58A;color:inherit;border-radius:3px;padding:0 1px}
+
+/* =====================================================
+   C — गाभारा : the sanctum at night
+   ===================================================== */
+.c{--bg:#0B111F;--s1:#131B2E;--s2:#1C2742;--tx:#EFE9DA;--tx2:#A7B0C6;--lamp:#FFB22E;--dim:#8892AA;--hair:#26314D;
+  background:var(--bg);color:var(--tx);font-family:"Hind",sans-serif}
+.c .sb{color:var(--tx2)}
+.c .bar{height:60px;flex:none;display:flex;align-items:center;padding:0 4px 0 16px}
+.c .bar.back{padding-left:4px}
+.c .bar h3{flex:1;font:700 26px/1.2 "Laila",serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c .bar h3.sm{font:600 18px "Hind";color:var(--tx2)}
+.c .bar .ibtn{color:var(--tx)}
+.c .bar .sz{font:600 19px "Laila";color:var(--lamp);width:46px;height:48px;display:grid;place-items:center}
+.c .lead{padding:0 16px 8px;font:400 15px/1.4 "Hind";color:var(--tx2)}
+.c .rows{padding:0 16px}
+.c .rows .r{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--hair)}
+.c .rows .nm{font:600 22px/1.3 "Laila",serif}
+.c .rows .ds{font:400 14px/1.4 "Hind";color:var(--tx2);margin-top:1px}
+.c .rows .ct{margin-left:auto;font:600 16px "Hind";color:var(--lamp);flex:none;padding-left:6px}
+.c .dock{flex:none;padding:10px 16px 6px;background:linear-gradient(transparent,var(--bg) 28%)}
+.c .dock .sf{height:60px;border-radius:30px;background:var(--s2);display:flex;align-items:center;gap:14px;padding:0 20px;font:400 17px "Hind";color:var(--tx2)}
+.c .dock .sf svg{color:var(--lamp)}
+.c .dock .sf.live{color:var(--tx);box-shadow:0 0 0 2px var(--lamp)}
+.c .dock .sf .caret{width:2px;height:26px;background:var(--lamp);margin-left:-10px}
+.c .dock .sf .x{margin-left:auto;color:var(--tx2)}
+.c .dock .hint{display:flex;align-items:center;gap:10px;margin:0 6px 10px;font:500 14.5px "Hind";color:var(--tx2)}
+.c .dock .hint b{font:600 17px "Laila";color:var(--lamp);border:1.5px solid var(--lamp);border-radius:999px;padding:3px 14px 4px}
+.c .ix .r{padding:13px 16px 12px;border-top:1px solid var(--hair)}
+.c .ix .tt{font:600 21px/1.4 "Laila",serif}
+.c .ix .au{font:400 14px/1.4 "Hind";color:var(--tx2)}
+.c .ix .au b{color:var(--lamp);font-weight:600}
+.c .content{padding:4px 20px 0}
+.c .content h2{font:700 27px/1.4 "Laila",serif;margin-top:2px}
+.c .content .by{font:600 16px "Hind";color:var(--lamp);margin-top:0}
+.c .flag3{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:10px 12px;background:var(--s1);border:1px solid var(--hair);border-radius:12px;color:var(--tx);font:400 14px/1.4 "Hind"}
+.c .flag3 svg{color:var(--lamp);width:22px;height:22px;margin-top:1px}
+.c .flag3 b{display:block;font-weight:600}
+.c .cp{margin-top:20px;font:500 26px/1.6 "Laila",serif;color:var(--dim)}
+.c .cp .h{display:block}
+.c .cp .n{font:500 21px "Laila",serif}
+.c .cp.on{color:#FFF3D6}
+.c .cp.on .n{color:var(--lamp)}
+.c .ctl{flex:none;padding:6px 8px 4px;display:flex;align-items:center;gap:2px;background:var(--s1);border-top:1px solid var(--hair)}
+.c .ctl .sz{font:600 20px "Laila";color:var(--lamp);width:46px;height:52px;display:grid;place-items:center}
+.c .ctl .sun{width:48px;height:52px;display:grid;place-items:center;color:var(--lamp)}
+.c .ctl .sp{flex:1}
+.c .ctl .go{height:52px;min-width:64px;border-radius:26px;background:var(--s2);color:var(--tx);display:grid;place-items:center;margin-left:8px}
+.c .ctl .go.main{background:var(--lamp);color:#1B1203;min-width:88px}
+.c .ctl .go.off{opacity:.35}
+.c mark{background:none;color:var(--lamp);font-weight:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+.c .res{flex:1;min-height:0;overflow:hidden}
+.c .res .r{padding:13px 16px 12px;border-top:1px solid var(--hair)}
+.c .res .tt{font:600 21px/1.4 "Laila",serif}
+.c .res .sn{font:400 15.5px/1.45 "Laila",serif;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c .res .mt{font:500 13px "Hind";color:var(--dim);margin-top:2px}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>Abhang: three redesign candidates</h1>
+  <p>Static comps of the four core screens: home, a category list, the reading view and search. All copy and verses are real, taken from the bundled corpus. Each candidate replaces the current saffron-and-cream look with its own world. Pick one (or mix a named piece from another) and I'll implement it in Compose.</p>
+  <nav class="jump" aria-label="Candidates">
+    <a href="#a">A · पोथी (the manuscript)</a>
+    <a href="#b">B · वारी (the road)</a>
+    <a href="#c">C · गाभारा (the sanctum)</a>
+  </nav>
+</header>
+
+<section class="cand" id="a">
+  <div class="spec">
+    <div>
+      <h2>A · पोथी <span>Pothi, the rubricated manuscript</span></h2>
+      <p class="thesis">The app becomes a hand-bound pothi. Turmeric-dyed paper (the real traditional pest-proofing), black ink, and kumkum-red for everything a scribe would rubricate: verse numbers, rules, and the poet's own signature line. The contents page is a true table of contents with dotted leaders.</p>
+    </div>
+    <dl>
+      <dt>Scene</dt><dd>Daylight and lamp-lit rooms, reading from a printed-feeling page. Highest comfort for long sung reading.</dd>
+      <dt>Palette</dt><dd class="chips"><span class="chip"><i style="background:#F3DB82"></i>#F3DB82 paper</span><span class="chip"><i style="background:#F8E8A9"></i>#F8E8A9 leaf</span><span class="chip"><i style="background:#21160A"></i>#21160A ink</span><span class="chip"><i style="background:#9E1B13"></i>#9E1B13 kumkum</span></dd>
+      <dt>Type</dt><dd><b>Tiro Devanagari Marathi</b> for titles and verses (a Marathi-form serif), <b>Mukta</b> for numerals and controls.</dd>
+      <dt>Signature</dt><dd>The <b>तुका म्हणे / ज्ञानदेव म्हणे</b> line is detected and set in red; couplets break at the । caesura; double-rule frames edge every bar.</dd>
+      <dt>Honest risk</dt><dd>Most ornamental. Heavy yellow can tire eyes at night, so it needs a dark twin (ink-brown paper, parchment text). Rubricating the signature relies on a "म्हणे" heuristic.</dd>
+    </dl>
+  </div>
+  <div class="screens" id="a-screens"></div>
+</section>
+
+<section class="cand" id="b">
+  <div class="spec">
+    <div>
+      <h2>B · वारी <span>Wari, the road to Pandharpur</span></h2>
+      <p class="thesis">Browsing is a journey. The nine categories are stops on a saffron route in the order a bhajan actually travels, from invocation to Pasaydan. Every abhang number is a milestone stone. Built for glare: white cotton ground, indigo ink, a pataka-saffron line, tulsi-green counts.</p>
+    </div>
+    <dl>
+      <dt>Scene</dt><dd>Outdoors on the wari or in a bright hall, one-handed, sun on the screen. Highest contrast of the three.</dd>
+      <dt>Palette</dt><dd class="chips"><span class="chip"><i style="background:#F7F8F4"></i>#F7F8F4 cotton</span><span class="chip"><i style="background:#111A36"></i>#111A36 indigo</span><span class="chip"><i style="background:#EE6F12"></i>#EE6F12 pataka</span><span class="chip"><i style="background:#1B6B43"></i>#1B6B43 tulsi</span></dd>
+      <dt>Type</dt><dd><b>Yatra One</b> for titles (sign-painter weight), <b>Mukta</b> for verses and UI. One sans family reads fastest at 24sp+.</dd>
+      <dt>Signature</dt><dd>The route on Home; milestone-stone numbers on lists; a standard 3-tab Material navigation bar (अभंग · शोधा · माहिती) replaces the about strip; sticky reading controls at the thumb.</dd>
+      <dt>Honest risk</dt><dd>Boldest and least "devotional-quiet". Yatra One is loud at small sizes, so it is limited to titles. Saffron cannot carry text on white (contrast), only lines and fills.</dd>
+    </dl>
+  </div>
+  <div class="screens" id="b-screens"></div>
+</section>
+
+<section class="cand" id="c">
+  <div class="spec">
+    <div>
+      <h2>C · गाभारा <span>Gabhara, the sanctum at night</span></h2>
+      <p class="thesis">Vithoba is सावळा, the dark one, and bhajan happens after dusk. A Chandrabhaga-indigo ground with one marigold lamp-colour and warm cotton-white text. Search and filter sit in the thumb zone at the bottom; while reading, the couplet you are singing is lit and the rest recede.</p>
+    </div>
+    <dl>
+      <dt>Scene</dt><dd>Night bhajan, dim rooms, phone held in one hand. Low glare, warm (not blue) whites.</dd>
+      <dt>Palette</dt><dd class="chips"><span class="chip"><i style="background:#0B111F"></i>#0B111F night</span><span class="chip"><i style="background:#1C2742"></i>#1C2742 stone</span><span class="chip"><i style="background:#EFE9DA"></i>#EFE9DA cotton</span><span class="chip"><i style="background:#FFB22E"></i>#FFB22E lamp</span></dd>
+      <dt>Type</dt><dd><b>Laila</b> (calligraphic Devanagari) for titles and verses at weight 500+, <b>Hind</b> for UI.</dd>
+      <dt>Signature</dt><dd><b>Bottom search bar</b> with the "vitthal → विठ्ठल" echo above it, and <b>line-by-line reading focus</b>: tap advances the lit couplet, the others dim.</dd>
+      <dt>Honest risk</dt><dd>Needs a light twin for daylight. The focus-dimming mode is new behaviour (a state per screen), and Laila's thin strokes need the 500 weight floor for legibility.</dd>
+    </dl>
+  </div>
+  <div class="screens" id="c-screens"></div>
+</section>
+
+<script>
+/* ---------- real content (from app/src/main/assets/abhangs.json) ---------- */
+const dn = n => String(n).replace(/[0-9]/g, d => '०१२३४५६७८९'[d]);
+const cats = [
+ ["नमन / गण","गणेश, सरस्वती, गुरू व विठ्ठल-रखुमाईला वंदन",10],
+ ["रूपाचे अभंग","विठ्ठलाच्या सगुण रूपाचे वर्णन",39],
+ ["संत-स्तुती","संत व वारकरी परंपरेची महती",158],
+ ["उपदेश / प्रामाणिक अभंग","भक्ती, आचरण व नामस्मरणाचा उपदेश",4013],
+ ["विरहिणी / भावगीत","विठ्ठलाच्या भेटीची ओढ, माऊलीशी नाते",63],
+ ["भारूड / गवळण / कीर्तन-शैली","लोकशैलीतील, कथनात्मक व उत्साही रचना",147],
+ ["गजर व नामस्मरण","टाळ-मृदंगासह नामाचा गजर",4],
+ ["हरिपाठ","संत ज्ञानेश्वरांचा हरिपाठ",28],
+ ["समाप्ती","पसायदान, आरती व जयघोष",14],
+];
+const list = [
+ ["समचरणदृष्टि विटेवरी साजिरी","संत तुकाराम",1],
+ ["सुंदर तें ध्यान उभे विटेवरी","संत तुकाराम",2],
+ ["राजस सुकुमार मदनाचा पुतळा","संत तुकाराम",4],
+ ["कर कटावरी तुळसीच्या माळा","संत तुकाराम",5],
+ ["अनेक पुष्पांच्या साजताती माळा","संत नामदेव",0],
+ ["न लगे हें मज तुझें ब्रम्हज्ञान","संत तुकाराम",532],
+ ["देखोनियां तुझ्या रूपाचा आकार","संत तुकाराम",535],
+ ["जेणें हा जीव दिला दान","संत तुकाराम",618],
+];
+const verse = [
+ "देवाचिये द्वारीं उभा क्षणभरी । तेणें मुक्ति चारी साधियेल्या ॥१॥",
+ "हरि मुखें म्हणा हरि मुखें म्हणा । पुण्याची गणना कोण करी ॥२॥",
+ "असोनि संसारीं जिव्हे वेगु करी । वेदशास्त्र उभारी बाह्या सदा ॥३॥",
+ "ज्ञानदेव म्हणे व्यासाचिया खुणा । द्वारकेचा राणा पांडवां घरीं ॥४॥",
+];
+const results = [
+ ["विठ्ठल सोयरा सज्जन विसांवा","विठ्ठल सोयरा सज्जन विसांवा । जाइन त्याच्या गांवा भेटावया","संत-स्तुती","संत तुकाराम"],
+ ["विठ्ठल आमचें जीवन","विठ्ठल आमचें जीवन । आगमनिगमाचें स्थान । विठ्ठल सिद्धीचें साधन","उपदेश / प्रामाणिक अभंग","संत तुकाराम"],
+ ["विठ्ठल भीमातीरवासी","विठ्ठल भीमातीरवासी । विठ्ठल पंढरीनिवासी । विठ्ठल पुंडलिकापासीं","उपदेश / प्रामाणिक अभंग","संत तुकाराम"],
+ ["विठ्ठला रे तूं उदाराचा राव","विठ्ठला रे तूं उदाराचा राव । विठ्ठला तूं जीव या जगाचा","उपदेश / प्रामाणिक अभंग","संत तुकाराम"],
+ ["विठ्ठल नावाडा फुकाचा","विठ्ठल नावाडा फुकाचा । आळविल्या साटीं वाचा","उपदेश / प्रामाणिक अभंग","संत तुकाराम"],
+ ["विठ्ठल सोयरा सज्जन सांगाती","विठ्ठल सोयरा सज्जन सांगाती । विठ्ठल या चित्तीं बैसलासे","उपदेश / प्रामाणिक अभंग","संत तुकाराम"],
+];
+const hl = s => s.replace(/(विठ्ठल\S*)/g, '<mark>$1</mark>');
+
+/* ---------- icons (Material, 24dp) ---------- */
+const P = {
+ search:"M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z",
+ back:"M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z",
+ share:"M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z",
+ info:"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z",
+ prev:"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z",
+ next:"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z",
+ close:"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z",
+ sun:"M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z",
+ book:"M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z",
+};
+const ic = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="${P[k]}"/></svg>`;
+const btn = k => `<span class="ibtn">${ic(k)}</span>`;
+
+const status = `<div class="sb"><span>9:41</span><span class="ic"><svg viewBox="0 0 16 12" fill="currentColor"><path d="M0 12 16 0v12z"/></svg><svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="19" height="10" rx="2.5"/><rect x="3" y="3" width="13" height="6" rx="1" fill="currentColor" stroke="none"/><path d="M22 4v4" stroke-linecap="round"/></svg></span></div>`;
+const shell = (cls, inner, cap) =>
+  `<figure class="shot"><div class="phone ${cls}" role="img" aria-label="${cap}">${status}<div class="body">${inner}</div><div class="gest"><i></i></div></div><figcaption>${cap}</figcaption></figure>`;
+
+/* couplet: split at the । caesura, keep ॥n॥ as a separate numeral */
+const couplet = (l, cls = '') => {
+  const [a, bRaw] = l.split(' । ');
+  const m = bRaw.match(/(॥.+॥)$/);
+  const b = bRaw.replace(/\s*॥.+॥$/, '');
+  return `<div class="cp ${cls}"><span class="h">${a} ।</span><span class="h">${b} <span class="n">${m ? m[1] : ''}</span></span></div>`;
+};
+const sigText = l => l; // the signature line is the one containing "म्हणे"
+
+/* ================= A ================= */
+const A = {};
+A.home = `
+ <div class="bar">${btn('search').replace('ibtn','ibtn" style="visibility:hidden')}<h3>अभंग संग्रह</h3>${btn('search')}</div>
+ <div class="scroll">
+  <div class="title-block"><div><h2><em>॥</em>अभंग संग्रह<em>॥</em></h2><p>वारकरी भजनातील अभंग</p></div></div>
+  <div class="toc-h">अनुक्रमणिका</div>
+  <div class="toc">${cats.map(c => `<div class="r"><div class="l"><span class="nm">${c[0]}</span><span class="dots"></span><span class="ct">${dn(c[2])}</span></div><div class="ds">${c[1]}</div></div>`).join('')}</div>
+ </div>
+ <div class="foot">${ic('info')}माहिती व स्रोत</div>`;
+A.list = `
+ <div class="bar">${btn('back')}<h3>रूपाचे अभंग</h3><span class="sz">अ−</span><span class="sz">अ+</span></div>
+ <div class="scroll">
+  <div class="filter">${ic('search')}शीर्षक किंवा क्रमांक शोधा…</div>
+  <div class="ix-head"><span>३९ अभंग</span><span>तुकाराम गाथा क्रमाने</span></div>
+  <div class="ix">${list.map(a => `<div class="r"><span class="no">${a[2] ? dn(a[2]) : '–'}</span><div><div class="tt">${a[0]}</div><div class="au">${a[1]}</div></div></div>`).join('')}</div>
+ </div>`;
+A.detail = `
+ <div class="bar">${btn('back')}<h3>हरिपाठ</h3>${btn('share')}</div>
+ <div class="scroll">
+  <div class="page"><div>
+    <h2>देवाचिये द्वारीं उभा क्षणभरी</h2>
+    <div class="by">संत ज्ञानेश्वर · हरिपाठ, क्र. १</div>
+    ${verse.map(l => couplet(l, /म्हणे/.test(l) ? 'sig' : '')).join('')}
+    <div class="rule"></div>
+  </div></div>
+  <div class="flag">${ic('info')}<div><b>पाठ तपासणे आवश्यक</b>गाण्यापूर्वी आपल्या परंपरेतील पाठाशी पडताळून पाहावा.</div></div>
+ </div>
+ <div class="ctl"><span class="sz">अ−</span><span class="sz">अ+</span><span class="scr">${ic('sun')}चालू</span><span class="sp"></span><span class="go off">${ic('prev')}मागील</span><span class="go">पुढील${ic('next')}</span></div>`;
+A.search = `
+ <div class="bar">${btn('back')}<h3>शोधा</h3><span class="ibtn"></span></div>
+ <div class="scroll">
+  <div class="q">${ic('search')}<span>vitthal</span><span class="caret"></span><span class="x">${ic('close')}</span></div>
+  <div class="hint">‘vitthal’ म्हणजे <b>विठ्ठल</b> अशी जुळवणी</div>
+  <div class="res">${results.map(r => `<div class="r"><div class="tt">${hl(r[0])}</div><div class="sn">${hl(r[1])}</div><div class="mt">${r[2]} · ${r[3]}</div></div>`).join('')}</div>
+ </div>`;
+
+/* ================= B ================= */
+const B = {};
+const pataka = `<svg class="flag" viewBox="0 0 54 54" aria-hidden="true"><path d="M10 4v48" stroke="#111A36" stroke-width="3" stroke-linecap="round"/><path d="M13 7h38l-12 12 12 12H13z" fill="#EE6F12"/></svg>`;
+B.home = `
+ <div class="head"><div><h2>अभंग संग्रह</h2><p>वारकरी भजनातील अभंग</p></div>${pataka}</div>
+ <div class="sbar">${ic('search')}<span>शोधा · विठ्ठल किंवा vitthal</span></div>
+ <div class="scroll"><div class="route">${cats.map((c, i) => `<div class="stop"><div class="node">${dn(i + 1)}</div><div><div class="nm">${c[0]}</div><div class="ds">${c[1]}</div><div class="ct">${dn(c[2])} अभंग</div></div></div>`).join('')}</div></div>
+ <div class="nav"><div class="on"><span>${ic('book')}</span>अभंग</div><div><span>${ic('search')}</span>शोधा</div><div><span>${ic('info')}</span>माहिती</div></div>`;
+B.list = `
+ <div class="bar">${btn('back')}<h3>रूपाचे अभंग</h3></div>
+ <div class="sub">३९ अभंग</div>
+ <div class="filter">${ic('search')}शीर्षक किंवा क्रमांक शोधा…</div>
+ <div class="scroll"><div class="ix">${list.map(a => `<div class="r"><span class="stone">${a[2] ? dn(a[2]) : '·'}</span><div><div class="tt">${a[0]}</div><div class="au">${a[1]}</div></div></div>`).join('')}</div></div>`;
+B.detail = `
+ <div class="bar">${btn('back')}<h3>हरिपाठ</h3>${btn('share')}</div>
+ <div class="scroll"><div class="content">
+  <h2>देवाचिये द्वारीं उभा क्षणभरी</h2>
+  <div class="by">संत ज्ञानेश्वर · हरिपाठ, क्र. १</div>
+  <div class="flag2">${ic('info')}<div><b>पाठ तपासणे आवश्यक</b>गाण्यापूर्वी आपल्या परंपरेतील पाठाशी पडताळून पाहावा.</div></div>
+  ${verse.map(l => couplet(l, /म्हणे/.test(l) ? 'sig' : '').replace(/(ज्ञानदेव म्हणे)/, '<span class="t">$1</span>')).join('')}
+ </div></div>
+ <div class="ctl"><span class="sz">अ−</span><span class="sz">अ+</span><span class="sun">${ic('sun')}</span><span class="sp"></span><span class="go off">${ic('prev')}</span><span class="go main">${ic('next')}</span></div>`;
+B.search = `
+ <div class="sq">${ic('back')}<span>vitthal</span><span class="caret"></span><span class="x">${btn('close')}</span></div>
+ <div class="hint">‘vitthal’ → <b>विठ्ठल</b></div>
+ <div class="scroll"><div class="res">${results.map(r => `<div class="r"><div class="tt">${hl(r[0])}</div><div class="sn">${hl(r[1])}</div><div class="mt">${r[2]} · ${r[3]}</div></div>`).join('')}</div></div>
+ <div class="nav"><div><span>${ic('book')}</span>अभंग</div><div class="on"><span>${ic('search')}</span>शोधा</div><div><span>${ic('info')}</span>माहिती</div></div>`;
+
+/* ================= C ================= */
+const C = {};
+C.home = `
+ <div class="bar"><h3>अभंग संग्रह</h3><span class="sz">अ−</span><span class="sz">अ+</span>${btn('info')}</div>
+ <div class="lead">वारकरी भजनातील अभंग</div>
+ <div class="scroll"><div class="rows">${cats.map(c => `<div class="r"><div><div class="nm">${c[0]}</div><div class="ds">${c[1]}</div></div><span class="ct">${dn(c[2])}</span></div>`).join('')}</div></div>
+ <div class="dock"><div class="sf">${ic('search')}विठ्ठल, vitthal, tukaram…</div></div>`;
+C.list = `
+ <div class="bar back">${btn('back')}<h3>रूपाचे अभंग</h3></div>
+ <div class="lead">३९ अभंग</div>
+ <div class="scroll ix">${list.map(a => `<div class="r"><div class="tt">${a[0]}</div><div class="au">${a[1]}${a[2] ? ' · <b>क्र. ' + dn(a[2]) + '</b>' : ''}</div></div>`).join('')}</div>
+ <div class="dock"><div class="sf">${ic('search')}शीर्षक किंवा क्रमांक शोधा…</div></div>`;
+C.detail = `
+ <div class="bar back">${btn('back')}<h3 class="sm">हरिपाठ</h3>${btn('share')}</div>
+ <div class="scroll"><div class="content">
+  <h2>देवाचिये द्वारीं उभा क्षणभरी</h2>
+  <div class="by">संत ज्ञानेश्वर · क्र. १</div>
+  <div class="flag3">${ic('info')}<div><b>पाठ तपासणे आवश्यक</b>गाण्यापूर्वी आपल्या परंपरेतील पाठाशी पडताळून पाहावा.</div></div>
+  ${verse.map((l, i) => couplet(l, i === 1 ? 'on' : '')).join('')}
+ </div></div>
+ <div class="ctl"><span class="sz">अ−</span><span class="sz">अ+</span><span class="sun">${ic('sun')}</span><span class="sp"></span><span class="go off">${ic('prev')}</span><span class="go main">${ic('next')}</span></div>`;
+C.search = `
+ <div class="bar back">${btn('back')}<h3 class="sm">शोधा</h3></div>
+ <div class="res">${results.slice(0,5).map(r => `<div class="r"><div class="tt">${hl(r[0])}</div><div class="sn">${hl(r[1])}</div><div class="mt">${r[2]} · ${r[3]}</div></div>`).join('')}</div>
+ <div class="dock"><div class="hint">‘vitthal’ <span>→</span> <b>विठ्ठल</b></div><div class="sf live">${ic('search')}<span>vitthal</span><span class="caret"></span><span class="x">${ic('close')}</span></div></div>`;
+
+const captions = { home: 'Home', list: 'Category list', detail: 'Reading view', search: 'Search' };
+for (const [id, S] of [['a', A], ['b', B], ['c', C]]) {
+  document.getElementById(id + '-screens').innerHTML =
+    ['home', 'list', 'detail', 'search'].map(k => shell(id, S[k], captions[k])).join('');
+}
+</script>
+</body>
+</html>
